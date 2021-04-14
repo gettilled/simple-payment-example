@@ -1,0 +1,250 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel=icon href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/svgs/solid/credit-card.svg>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://js.tilled.com/v1"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <style type="text/css">
+    body { margin-top:20px; }
+
+    .credit-card-box .panel-title {
+        display: inline;
+        font-weight: bold;
+    }
+    .credit-card-box .form-control.error {
+        border-color: red;
+        outline: 0;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+    }
+    .credit-card-box label.error {
+      font-weight: bold;
+      color: red;
+      padding: 2px 8px;
+      margin-top: 2px;
+    }
+    .credit-card-box .payment-errors {
+      font-weight: bold;
+      color: red;
+      padding: 2px 8px;
+      margin-top: 12px;
+    }
+    .credit-card-box label {
+        display: block;
+    }
+
+    .credit-card-box .display-tr {
+        display: table-row;
+    }
+    .credit-card-box .display-td {
+        display: table-cell;
+        vertical-align: middle;
+        width: 50%;
+    }
+
+    .credit-card-box .panel-heading img {
+        min-width: 180px;
+        border-style: solid;
+        border-width: 3px;
+        border-color: white;
+        box-shadow: 3px 3px 5px #D3D3D3;
+    }
+
+    .credit-card-font-size {
+      font-size: large;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-md-4">
+        <h2>Tilled.js Example</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-4">
+        <!-- CREDIT CARD FORM STARTS HERE -->
+        <div class="panel panel-default credit-card-box">
+          <div class="panel-heading display-table">
+            <div class="row display-tr">
+              <h3 class="panel-title display-td">Payment Details</h3>
+              <div class="display-td">
+                <i class="fa fa-cc-visa pull-right credit-card-font-size"></i>
+                <i class="fa fa-cc-mastercard pull-right credit-card-font-size"></i>
+                <i class="fa fa-cc-discover pull-right credit-card-font-size"></i>
+                <i class="fa fa-cc-amex pull-right credit-card-font-size"></i>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <form role="form" id="payment-form" method="POST" action="javascript:void(0);">
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <label for="card-number-element">CARD NUMBER</label>
+                    <div class="input-group">
+                      <div class="form-control" id="card-number-element"> </div>
+                      <span class="input-group-addon"><i class="fa fa-credit-card" id='credit-card-logo'></i></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-7 col-md-7">
+                  <div class="form-group">
+                    <label for="card-expiration-element"><span class="hidden-xs">EXPIRATION</span><span
+                        class="visible-xs-inline">EXP</span> DATE</label>
+                    <div class="form-control" id="card-expiration-element"></div>
+                  </div>
+                </div>
+                <div class="col-xs-5 col-md-5 pull-right">
+                  <div class="form-group">
+                    <label for="card-cvv-element">CVV CODE</label>
+                    <div class="form-control" id="card-cvv-element"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <button class="btn btn-success btn-lg btn-block" type="button" id="submit" disabled>Pay</button>
+                </div>
+              </div>
+              <div class="row" style="display:none;">
+                <div class="col-xs-12">
+                  <p class="payment-errors"></p>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-xs-12 col-md-8" style="font-size: 12pt; line-height: 2em;">
+        <p>Be sure to insert your secret and publishable API keys.</p>
+  
+        <p><a href="https://api.tilled.com/docs#section/Tilled.js" target="_blank">Tilled.js docs</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Included here for simplicity of example -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const tilledAccountId = 'acct_ACCOUNT_ID_HERE'
+      const tilled = new Tilled(
+        'pk_PUBLISHABLE_KEY_HERE', 
+        tilledAccountId, 
+        { 
+          sandbox: true,
+          log_level: 0 
+        })
+    
+      const form = await tilled.form({
+        payment_method_type: 'card',
+      })
+    
+      form.createField('cardNumber').inject('#card-number-element')
+      form.createField('cardExpiry').inject('#card-expiration-element')
+      form.createField('cardCvv').inject('#card-cvv-element')
+    
+      await form.build()
+    
+      const submitButton = document.getElementById('submit')
+    
+      form.on('validation', (event) => {
+        if (event.field) {
+          event.field.element.classList.remove('success')
+          event.field.element.classList.remove('error')
+          if (event.field.valid) {
+            event.field.element.classList.add('success')
+          } else {
+            event.field.element.classList.add('error')
+          }
+        }
+
+        submitButton.disabled = form.invalid
+      })
+    
+      form.fields.cardNumber.on('change', () => {
+        const cardBrand = form.getCardBrand()
+        const icon = document.getElementById('credit-card-logo')
+    
+        switch (cardBrand) {
+          case 'American Express':
+            icon.classList = 'fa fa-cc-amex'
+            break
+          case 'MasterCard':
+            icon.classList = 'fa fa-cc-mastercard'
+            break
+          case 'Visa':
+            icon.classList = 'fa fa-cc-visa'
+            break
+          case 'Diners':
+            icon.classList = 'fa fa-cc-diners-club'
+            break
+          case 'JCB':
+            icon.classList = 'fa fa-cc-jcb'
+            break
+          case 'Discover':
+            icon.classList = 'fa fa-cc-discover'
+            break
+          default:
+            icon.classList = 'fa fa-credit-card'
+        }
+      })
+    
+      submitButton.addEventListener('click', async () => {
+        
+        submitButton.disabled = true
+
+        // Generally gone in advance...
+        // Ask server to generate PaymentIntent
+        // it will send back clientSecret
+        let secretResponse = await fetch('/secret/' + tilledAccountId)
+        let secretData = await secretResponse.json()
+        let clientSecret = secretData.client_secret
+
+        console.log('PaymentIntent clientSecret: ' + clientSecret)
+
+
+        await tilled.confirmPayment(clientSecret, {
+          // you can either pass the entire form
+          // or the id of the paymentMethod
+          payment_method: { 
+            form,
+            type: 'card',
+            billing_details: {
+              name: 'John Smith',
+              address: {
+                country: "US",
+                zip: "80301",
+                state: "CO",
+                city: "Boulder",
+                street: "2905 Pearl Street"
+              }
+            }
+          },
+        }).then(
+          (payment) => {
+            console.log('Successful payment.')
+            console.log(payment)
+            window.alert('Successful payment')
+            // payment is successful, payment will contain information about the transaction that was created
+          },
+          (error) => {
+            console.log('Failed to confirm payment.')
+            console.log(error)
+            // show the error to the customer
+            window.alert(error)
+          },
+        )
+
+      })
+  }) // end of DOMContentLoaded
+  
+  </script>
+</body>
+</html>
