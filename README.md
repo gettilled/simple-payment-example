@@ -5,7 +5,7 @@
 
 # Create a sandbox account and add your configuration values
 
-- [Register a sandbox account](https://sandbox-app.tilled.com/register)
+- [Register a sandbox account](https://sandbox-app.tilled.com/auth/register)
 - Create a secret and publishable api key
 - Update line 138 of index.html with your publishable API Key
 - Update line 7 of app.js with your secret API key
