@@ -1,5 +1,5 @@
 # Dependencies
-- [Node.js](https://node.js)
+- [Node.js](https://nodejs.org)
 # Get started
 
 - Clone the project
