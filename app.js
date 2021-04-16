@@ -2,6 +2,7 @@ const express = require('express')
 const axios = require('axios')
 const app = express()
 const path = require('path')
+const open = require('open')
 const port = process.env.port || 5000
 
 const tilledSecretApiKey = 'sk_SECRET_KEY_HERE'
@@ -54,4 +55,5 @@ app.get('/secret/:id', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
+  open(`http://localhost:${port}`)
 })
