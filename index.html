@@ -16,7 +16,12 @@
 
 <style type="text/css">
     body { margin-top:20px; }
-
+    .inputField {
+          border: 1.5px solid #DFE3EB;
+          height: 40px;
+          padding-left: 10px;
+          font-weight: 500;
+        }
     .credit-card-box .panel-title {
         display: inline;
         font-weight: bold;
@@ -85,13 +90,14 @@
 </ul>
 
 <div class="tab-content">
-<div class="tab-pane fade show active" id="nav-tab-card">
-	<form role="form" id="payment-form" method="POST" action="javascript:void(0);">
+<div class="tab-pane fade show active" id="nav-tab-card" *ngIf="selectedPaymentType === 'card'">
+<form role="form" id="payment-form" method="POST" action="javascript:void(0);">
 	<div class="form-group">
 		<label for="card-number-element">Card number</label>
-		<div class="input-group">
-			<input type="text" class="form-control" name="cardNumber" placeholder="" id="card-number-element">
+		<div class="input-group" >
 			<div class="input-group-append">
+        <div class="inputField" id="card-number-element">
+        </div>
 				<span class="input-group-text text-muted">
 					<i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>   
 					<i class="fab fa-cc-mastercard"></i> 
@@ -99,58 +105,57 @@
 			</div>
 		</div>
 	</div> <!-- form-group.// -->
-
 	<div class="row">
-	    <div class="col-sm-8">
+	    <div class="col-sm-6">
 	        <div class="form-group">
-	            <label for="card-expiration-element"><span class="hidden-xs">Expiration</span> </label>
-	        	<div class="input-group" id="card-expiration-element">
-	        		<input type="number" class="form-control" placeholder="MM" name="">
-		            <input type="number" class="form-control" placeholder="YY" name="">
-	        	</div>
+	            <label ><span class="hidden-xs">Expiration</span> </label>
+	        	<div class="inputField" id="card-expiration-element" >
+	        		</div>
 	        </div>
 	    </div>
-	    <div class="col-sm-4">
-	        <div class="form-group" id="card-cvv-element">
-	            <label for="card-cvv-element"  data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
-	            <input type="number" class="form-control"  required="">
+	    <div class="col-sm-6">
+	        <div class="form-group">
+	            <label>CVV <i class="fa fa-question-circle"></i></span></label>
+              <div class="inputField" id="card-cvv-element" >
+	        		</div>
 	        </div> <!-- form-group.// -->
 	    </div>
 	</div> <!-- row.// -->
-	<button class="subscribe btn btn-primary btn-block" type="button" id="submit"> Pay  </button>
-	</form>
-</div> <!-- tab-pane.// -->
-<div class="tab-pane fade" id="nav-tab-ach">
-  <div class="form-group">
-		<label for="username">Full name (on the card)</label>
-		<input type="text" class="form-control" name="username" placeholder="" required="">
-    <div class="form-group">
-      <label for="address">Address</label>
-      <input type="text" class="form-control" name="address" placeholder="" required="">
-    </div> <!-- form-group.// --><div class="form-group">
-      <label for="accountNumber">Account Number</label>
-      <input type="text" class="form-control" name="accountNumber" placeholder="" required="">
-    </div> <!-- form-group.// --><div class="form-group">
-      <label for="routingNumber">Routing Number</label>
-      <input type="text" class="form-control" name="routingNumber" placeholder="" required="">
-    </div> <!-- form-group.// -->
-	</div> <!-- form-group.// -->
-</div>
-</div> <!-- tab-content .// -->
+  <button class="subscribe btn btn-primary btn-block" type="button" id="submit"> Pay  </button>
 
+  </div> <!-- tab-pane.// -->
+  <div class="tab-pane fade" id="nav-tab-ach" *ngIf="selectedPaymentType === 'ach_debit'">
+    <div class="row">
+      <div class="col-sm-6">
+
+    <div class="form-group">
+		<label >Full name</label>
+		<input type="text" class="form-control" name="username" placeholder="" required="">
+    </div>
+    <div class="form-group">
+      <label >Address</label>
+      <input type="text" class="form-control" name="address" placeholder="" required="">
+    </div> <!-- form-group.// -->
+    <div class="form-group">
+          <label>Account Number</label>
+      <div class="inputField" id="bank-account-number-element" >
+          </div>
+        </div>
+        <div class="form-group">
+            <label><span class="hidden-xs">Routing Number</span></label>
+        <div class="inputField" id="bank-routing-number-element" >
+            </div>
+        </div> <!-- form-group.// -->  
+      </div>
+      </div>
+  <button class="subscribe btn btn-primary btn-block" type="button" id="submit2"> Pay  </button>
+</div>
+</form>
+</div> <!-- tab-content .// -->
 </div> <!-- card-body.// -->
 </article> <!-- card.// -->
-
-
-	</aside> <!-- col.// -->
-</div> <!-- row.// -->
-
-</div> 
-<!--container end.//-->
-
 <br><br>
     <h4 class="text-center">Be sure to insert your secret and publishable API keys.</h4>
-
     <h4 class="text-center"><a href="https://api.tilled.com/docs#section/Tilled.js" target="_blank">Tilled.js docs</a>
     </h4>
  
@@ -159,6 +164,7 @@
 
   <!-- Included here for simplicity of example -->
   <script>
+
     document.addEventListener('DOMContentLoaded', async () => {
       const tilledAccountId = 'acct_u2LZeK0EZu85WLVxObS5T'
       const tilled = new Tilled(
@@ -172,11 +178,9 @@
       const form = await tilled.form({
         payment_method_type: 'card',
       })
-    
       form.createField('cardNumber').inject('#card-number-element')
       form.createField('cardExpiry').inject('#card-expiration-element')
       form.createField('cardCvv').inject('#card-cvv-element')
-    
       await form.build()
     
       const submitButton = document.getElementById('submit')
@@ -243,6 +247,90 @@
           payment_method: { 
             form,
             type: 'card',
+            billing_details: {
+              name: 'John Smith',
+              address: {
+                country: "US",
+                zip: "80301",
+                state: "CO",
+                city: "Boulder",
+                street: "2905 Pearl Street"
+              }
+            }
+          },
+        }).then(
+          (payment) => {
+            console.log('Successful payment.')
+            console.log(payment)
+            window.alert('Successful payment')
+            // payment is successful, payment will contain information about the transaction that was created
+          },
+          (error) => {
+            console.log('Failed to confirm payment.')
+            console.log(error)
+            // show the error to the customer
+            window.alert(error)
+          },
+        )
+
+      })
+  }) // end of DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', async () => {
+      const tilledAccountId = 'acct_u2LZeK0EZu85WLVxObS5T'
+      const tilled = new Tilled(
+        'pk_EqUYyPl8PhrIjYGtZU3Xn3lD6QgoZ9ehp0fp2GsurimvXFyQOyXtNny2AhGTxufLDa3MLLaoqw9TQGA2Yk2atcDzGbnMXJuJ0SPF', 
+        tilledAccountId, 
+        { 
+          sandbox: true,
+          log_level: 0 
+        })
+    
+      const form = await tilled.form({
+        payment_method_type: 'ach_debit',
+      })
+
+      form.createField('bankRoutingNumber').inject('#bank-routing-number-element');
+      form.createField('bankAccountNumber').inject('#bank-account-number-element');
+    
+      await form.build()
+    
+      const submitButton = document.getElementById('submit2')
+    
+      form.on('validation', (event) => {
+        if (event.field) {
+          event.field.element.classList.remove('success')
+          event.field.element.classList.remove('error')
+          if (event.field.valid) {
+            event.field.element.classList.add('success')
+          } else {
+            event.field.element.classList.add('error')
+          }
+        }
+
+        submitButton.disabled = form.invalid
+      })
+    
+    
+      submitButton.addEventListener('click', async () => {
+        
+        submitButton.disabled = true
+
+        // Generally gone in advance...
+        // Ask server to generate PaymentIntent
+        // it will send back clientSecret
+        let secretResponse = await fetch('/secret/' + tilledAccountId)
+        let secretData = await secretResponse.json()
+        let clientSecret = secretData.client_secret
+
+        console.log('PaymentIntent clientSecret: ' + clientSecret)
+
+
+        await tilled.confirmPayment(clientSecret, {
+          // you can either pass the entire form
+          // or the id of the paymentMethod
+          payment_method: { 
+            form,
+            type: 'ach_debit',
             billing_details: {
               name: 'John Smith',
               address: {

@@ -24,7 +24,7 @@ app.get('/secret/:id', (req, res) => {
     {
       amount: 500,
       currency: 'usd',
-      payment_method_types: ['card'],
+      payment_method_types: ['card','ach_debit'],
     },
     {
       headers: headers,
