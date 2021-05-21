@@ -5,7 +5,7 @@ const path = require('path')
 const open = require('open')
 const port = process.env.port || 5000
 
-const tilledSecretApiKey = 'sk_14blwMvv8p1zfA7vF1MhANksnECiPsYM2FIWqS6iNiDf0rhD0I4GFARSkejTlodLcBhBTJ5l9qol2GYs435yYHvvDviXG0VMe0lX'
+const tilledSecretApiKey = 'sk_SECRET_KEY_HERE'
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/index.html'))
