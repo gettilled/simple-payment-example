@@ -146,9 +146,29 @@
         payment_method_type: 'card',
       })
     
-      form.createField('cardNumber').inject('#card-number-element')
-      form.createField('cardExpiry').inject('#card-expiration-element')
-      form.createField('cardCvv').inject('#card-cvv-element')
+      // Optional styling of the fields
+      const fieldOptions = {
+        styles: {
+          base: {
+            fontFamily: 'Helvetica Neue, Arial, sans-serif',
+            color: '#304166',
+            fontWeight: '400',
+            fontSize: '16px',
+          },
+          invalid: {
+            ':hover': {
+              textDecoration: 'underline dotted red',
+            },
+          },
+          valid: {
+            color: '#00BDA5',
+          },
+        },
+      };
+
+      form.createField('cardNumber', fieldOptions).inject('#card-number-element')
+      form.createField('cardExpiry', fieldOptions).inject('#card-expiration-element')
+      form.createField('cardCvv', fieldOptions).inject('#card-cvv-element')
     
       await form.build()
     
