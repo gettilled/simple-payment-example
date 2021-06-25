@@ -167,11 +167,12 @@
 
   <!-- Included here for simplicity of example -->
   <script>
-
+    var account_id = 'Add Your Key Here';
+    var pk_PUBLISHABLE_KEY = 'Add Your Key Here';
     document.addEventListener('DOMContentLoaded', async () => {
-      const tilledAccountId = 'account_id_HERE'
+      const tilledAccountId = account_id
       const tilled = new Tilled(
-        'pk_PUBLISHABLE_KEY_HERE', 
+        pk_PUBLISHABLE_KEY, 
         tilledAccountId, 
         { 
           sandbox: true,
@@ -279,9 +280,9 @@
       })
   }) // end of DOMContentLoaded
   document.addEventListener('DOMContentLoaded', async () => {
-    const tilledAccountId = 'account_id_HERE'
+    const tilledAccountId = account_id
       const tilled = new Tilled(
-        'pk_PUBLISHABLE_KEY_HERE', 
+        pk_PUBLISHABLE_KEY, 
         tilledAccountId,  
         { 
           sandbox: true,
