@@ -94,16 +94,12 @@
 <form role="form" id="payment-form" method="POST" action="javascript:void(0);">
   <div class="form-group">
     <label for="card-number-element">Card number</label>
-    <div class="input-group" >
-      <div class="input-group-append">
-        <div class="inputField" id="card-number-element">
+        <div class="inputField" id="card-number-element"  autocomplete="cc-number">
         </div>
         <span class="input-group-text text-muted">
           <i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>   
           <i class="fab fa-cc-mastercard"></i> 
         </span>
-      </div>
-    </div>
   </div> <!-- form-group.// -->
   <div class="row">
       <div class="col-sm-6">
@@ -136,6 +132,13 @@
       <label >Address</label>
       <input type="text" class="form-control" name="address" placeholder="" required="">
     </div> <!-- form-group.// -->
+    <div class="form-group" >
+      <label>Account Type</label>
+    <select class="form-control" id="ach_account_type" name='ach_account_type'>
+      <option value="checking">Checking</option>
+      <option value="savings">Savings</option>
+    </select>
+    </div>
     <div class="form-group">
           <label>Account Number</label>
       <div class="inputField" id="bank-account-number-element" >
@@ -145,7 +148,7 @@
             <label><span class="hidden-xs">Routing Number</span></label>
         <div class="inputField" id="bank-routing-number-element" >
             </div>
-        </div> <!-- form-group.// -->  
+        </div> <!-- form-group.// -->    
       </div>
       </div>
   <button class="subscribe btn btn-primary btn-block" type="button" id="submit2"> Pay  </button>
@@ -279,21 +282,21 @@
     const tilledAccountId = 'account_id_HERE'
       const tilled = new Tilled(
         'pk_PUBLISHABLE_KEY_HERE', 
-        tilledAccountId, 
+        tilledAccountId,  
         { 
           sandbox: true,
           log_level: 0 
         })
-    
+        
       const form = await tilled.form({
         payment_method_type: 'ach_debit',
       })
-
+      
       form.createField('bankRoutingNumber').inject('#bank-routing-number-element');
       form.createField('bankAccountNumber').inject('#bank-account-number-element');
-    
+      
       await form.build()
-    
+      
       const submitButton = document.getElementById('submit2')
     
       form.on('validation', (event) => {
@@ -340,6 +343,9 @@
                 city: "Boulder",
                 street: "2905 Pearl Street"
               }
+            },
+            ach_debit: {
+            account_type: document.getElementById('ach_account_type').value
             }
           },
         }).then(
@@ -359,7 +365,7 @@
 
       })
   }) // end of DOMContentLoaded
-  
-  </script>
+
+</script>
 </body>
 </html>
