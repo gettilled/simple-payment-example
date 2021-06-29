@@ -12,10 +12,10 @@
 
 - [Register a sandbox account](https://sandbox-app.tilled.com/auth/register)
 - [Create secret and publishable API keys](https://sandbox-app.tilled.com/api-keys)
-  - Replace `sk_SECRET_KEY_HERE` with your secret API key in `app.js`
-  - Replace `pk_PUBLISHABLE_KEY_HERE` with your publishable API Key in `index.html`
+  - Add your secret API key to the `tilledSecretApiKey` variable in `app.js`
+  - Add your publishable API Key to the `pk_PUBLISHABLE_KEY` variable in `index.html`
 - [View your list of connected accounts](https://sandbox-app.tilled.com/connected-accounts) and either use the auto-created `Shovel Shop (demo)` account or create your own connected account. *Note: Prefix the name of the account with an asterisk (ex. '\*The Surf Shop') to bypass needing to submit an onboarding form*.
-  - Replace `acct_ACCOUNT_ID_HERE` with an *active* connected Account ID in `index.html`
+  - Add an *active* connected Account ID to the `account_id` variable in `index.html`
 - Run the sample server:
 
    ```
