@@ -23,11 +23,17 @@
    ```
 
 # Process your first payment
-![Example](Simple-Payment-Example.png)
+![Example](/img/Simple-Payment-Example.png)
 
 - Navigate to [http://localhost:5000](http://localhost:5000) in your browser, enter `4037111111000000` as the test card number with a valid expiration date and `123` as the CVV Code and click Pay
 - Optional: Look in the browser's developer console to see payment intent creation logs
 - Go [here](https://sandbox-app.tilled.com/payments) to see your payment
+
+# Manually create payment methods
+![Example](/img/Create-Payment-Method.png)
+
+- In the browser, check the save payment checkbox, fill in the additional fields and click Save. 
+- View the paymentMethod.id in the alert or the console.
 
 # What's Next?
 [API Docs](api.tilled.com/docs)

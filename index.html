@@ -70,6 +70,11 @@
       margin-right:auto ;
     }
 
+    .hidden {
+      visibility: hidden;
+      display: none;
+    }
+
     #main {
       max-width: 600px;
     }
@@ -83,10 +88,10 @@
 <div class="card-body p-5">
 
 <ul class="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
-  <li class="nav-item">
+  <li class="nav-item w-50">
     <a class="nav-link active" data-toggle="pill" href="#nav-tab-card">
     <i class="fa fa-credit-card"></i> Credit Card</a></li>
-  <li class="nav-item">
+  <li class="nav-item w-50">
     <a class="nav-link" data-toggle="pill" href="#nav-tab-ach">
     <i class="fas fa-university"></i>  ACH</a></li>
   
@@ -94,14 +99,15 @@
 
 <div class="tab-content">
 <div class="tab-pane fade show active" id="nav-tab-card" *ngIf="selectedPaymentType === 'card'">
-<form role="form" id="payment-form" method="POST" action="javascript:void(0);">
+  <form role="form" id="payment-form" method="POST" action="javascript:void(0);">
   <div class="form-group">
     <label for="card-number-element">Card number</label>
         <div class="inputField" id="card-number-element"  autocomplete="cc-number">
         </div>
         <span class="input-group-text text-muted">
-          <i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>   
-          <i class="fab fa-cc-mastercard"></i> 
+          <i class="credit-card-logo fab fa-cc-visa"></i>&nbsp;<i class="credit-card-logo fab fa-cc-amex"></i>&nbsp;
+          <i class="credit-card-logo fab fa-cc-mastercard"></i>&nbsp;<i class="credit-card-logo fab fa-cc-diners-club"></i>&nbsp;
+          <i class="credit-card-logo fab fa-cc-jcb"></i>&nbsp;<i class="credit-card-logo fab fa-cc-discover"></i>
         </span>
   </div> <!-- form-group.// -->
   <div class="row">
@@ -119,45 +125,84 @@
               </div>
           </div> <!-- form-group.// -->
       </div>
+      <div class="w-100 m-3">
+        <div class="form-group card-billing-details hidden">
+          <label >Full Name</label>
+          <input type="text" class="form-control" id="card-name-element" name="name" placeholder="" required="">
+          <label class="mt-3">Address</label>
+          <input type="text" class="form-control" id="card-address-element" name="address" placeholder="" required="">
+          <div class="d-flex mt-3">
+            <div class="col-sm-6">  
+              <label >Country</label>
+              <input type="text" class="form-control" id="card-country-element" name="country" placeholder="" required="">
+              <label >City</label>
+              <input type="text" class="form-control" id="card-city-element" name="city" placeholder="" required="">
+            </div>
+            <div class="col-sm-6">
+              <label >State</label>
+              <input type="text" class="form-control" id="card-state-element" name="state" placeholder="" required="">
+              <label >Zip</label>
+              <input type="text" class="form-control" id="card-zip-element" name="billingZip" placeholder="" required="">
+            </div>
+          </div>  
+        </div> <!-- form-group.// -->
+      </div>
   </div> <!-- row.// -->
+  <div class="d-flex justify-content-center align-items-center">
+    <label class="mb-0 p-3" for="save-pm-checkbox">Create payment method?</label>
+    <input class="p-3" type="checkbox" name="save-pm-checkbox" id="card-save-pm-checkbox-element">
+  </div>
   <button class="subscribe btn btn-primary btn-block" type="button" id="submit"> Pay  </button>
+  <button class="subscribe btn btn-primary btn-block hidden" type="button" id="submitPM"> Save </button>
 
   </div> <!-- tab-pane.// -->
   <div class="tab-pane fade" id="nav-tab-ach" *ngIf="selectedPaymentType === 'ach_debit'">
+    <!-- <div class="row"> -->
     <div class="row">
-      <div class="col-sm-6">
-
-    <div class="form-group">
-    <label >Full name</label>
-    <input type="text" class="form-control" name="username" placeholder="" required="">
-    </div>
-    <div class="form-group">
-      <label >Address</label>
-      <input type="text" class="form-control" name="address" placeholder="" required="">
-    </div> <!-- form-group.// -->
-    <div class="form-group" >
-      <label>Account Type</label>
-    <select class="form-control" id="ach_account_type" name='ach_account_type'>
-      <option value="checking">Checking</option>
-      <option value="savings">Savings</option>
-    </select>
-    </div>
-    <div class="form-group">
-          <label>Account Number</label>
-      <div class="inputField" id="bank-account-number-element" >
-          </div>
+      <div class="w-100 pr-3">
+        <div class="form-group d-flex flex-column gap-3" >
+          <label>Account Type</label>
+          <select class="form-control" id="ach_account_type" name='ach_account_type'>
+            <option value="checking">Checking</option>
+            <option value="savings">Savings</option>
+          </select>
+          <label class="mt-3">Account Number</label>
+          <div class="inputField" id="bank-account-number-element" ></div>
+          <label class="mt-3">Routing Number</label>
+          <div class="inputField" id="bank-routing-number-element" ></div>
+        </div> <!-- form-group.// -->
+        <div class="form-group ach-billing-details hidden">
+          <label >Full name</label>
+          <input type="text" id="ach-name-element" class="form-control" name="name" placeholder="" required="">
+          <label class="mt-3">Address</label>
+          <input type="text" class="form-control" id="ach-address-element" name="address" placeholder="" required="">
+          <div class="d-flex mt-3">
+                <div class="col-sm-6">  
+                  <label >Country</label>
+                  <input type="text" class="form-control" id="ach-country-element" name="country" placeholder="" required="">
+                  <label >City</label>
+                  <input type="text" class="form-control" id="ach-city-element" name="city" placeholder="" required="">
+                </div>
+                <div class="col-sm-6">
+                  <label >State</label>
+                  <input type="text" class="form-control" id="ach-state-element" name="state" placeholder="" required="">
+                  <label >Zip</label>
+                  <input type="text" class="form-control" id="ach-zip-element" name="billingZip" placeholder="" required="">
+                </div>
+              </div>  
+        </div> <!-- form-group.// -->
+            
         </div>
-        <div class="form-group">
-            <label><span class="hidden-xs">Routing Number</span></label>
-        <div class="inputField" id="bank-routing-number-element" >
-            </div>
-        </div> <!-- form-group.// -->    
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+          <label class="mb-0 p-3" for="save-pm-checkbox">Create payment method?</label>
+          <input class="p-3" type="checkbox" name="save-pm-checkbox" id="ach-save-pm-checkbox-element">
+        </div>
+        <button class="subscribe btn btn-primary btn-block" type="button" id="submit2"> Pay  </button>
+        <button class="subscribe btn btn-primary btn-block hidden" type="button" id="submitPM2"> Save  </button>
       </div>
-      </div>
-  <button class="subscribe btn btn-primary btn-block" type="button" id="submit2"> Pay  </button>
-</div>
-</form>
-</div> <!-- tab-content .// -->
+    </form>
+  </div> <!-- tab-content .// -->
 </div> <!-- card-body.// -->
 </article> <!-- card.// -->
 <br><br>
@@ -170,8 +215,27 @@
 
   <!-- Included here for simplicity of example -->
   <script>
-     var account_id = 'Add Your Key Here';
+    var account_id = 'Add Your Account Id Here';
     var pk_PUBLISHABLE_KEY = 'Add Your Key Here';
+
+    // toggle Pay vs Save Payment Method
+    toggleSavePayment()
+
+    function toggleSavePayment () {
+      document.getElementById('card-save-pm-checkbox-element').addEventListener('change', () => {
+        document.getElementById('submit').classList.toggle('hidden');
+        document.getElementById('submitPM').classList.toggle('hidden');
+
+        document.querySelector('.form-group.card-billing-details').classList.toggle('hidden');
+      })
+      document.getElementById('ach-save-pm-checkbox-element').addEventListener('change', () => {
+        document.getElementById('submit2').classList.toggle('hidden');
+        document.getElementById('submitPM2').classList.toggle('hidden');
+
+        document.querySelector('.form-group.ach-billing-details').classList.toggle('hidden');
+      })
+    }      
+
     document.addEventListener('DOMContentLoaded', async () => {
       const tilledAccountId = account_id
       const tilled = new Tilled(
@@ -213,6 +277,7 @@
       await form.build()
     
       const submitButton = document.getElementById('submit')
+      const savePMButton = document.getElementById('submitPM')
     
       form.on('validation', (event) => {
         if (event.field) {
@@ -226,33 +291,37 @@
         }
 
         submitButton.disabled = form.invalid
+        savePMButton.disabled = form.invalid
       })
     
+      // Update UI to reflect card brand
       form.fields.cardNumber.on('change', () => {
         const cardBrand = form.getCardBrand()
-        const icon = document.getElementById('credit-card-logo')
+        const icons = document.querySelectorAll('.credit-card-logo')
     
+        const highlight = icon => icon.style = 'color: #3DC9B5';
+
         switch (cardBrand) {
           case 'American Express':
-            icon.classList = 'fa fa-cc-amex'
+            highlight(document.querySelector('.credit-card-logo.fab.fa-cc-amex'));
             break
           case 'MasterCard':
-            icon.classList = 'fa fa-cc-mastercard'
+            highlight(document.querySelector('.credit-card-logo.fab.fa-cc-mastercard'));
             break
           case 'Visa':
-            icon.classList = 'fa fa-cc-visa'
+            highlight(document.querySelector('.credit-card-logo.fab.fa-cc-visa'));
             break
           case 'Diners':
-            icon.classList = 'fa fa-cc-diners-club'
+            highlight(document.querySelector('.credit-card-logo.fab.fa-cc-diners-club'));
             break
           case 'JCB':
-            icon.classList = 'fa fa-cc-jcb'
+            highlight(document.querySelector('.credit-card-logo.fab.fa-cc-jcb'));
             break
           case 'Discover':
-            icon.classList = 'fa fa-cc-discover'
+            highlight(document.querySelector('.credit-card-logo.fab.fa-cc-discover'));
             break
           default:
-            icon.classList = 'fa fa-credit-card'
+            icons.forEach( icon => icon.removeAttribute('style'));
         }
       })
     
@@ -270,9 +339,9 @@
         console.log('PaymentIntent clientSecret: ' + clientSecret)
 
 
+        // you can either pass the entire payment method object
+        // or the id of the paymentMethod
         await tilled.confirmPayment(clientSecret, {
-          // you can either pass the entire form
-          // or the id of the paymentMethod
           payment_method: { 
             form,
             type: 'card',
@@ -288,10 +357,43 @@
             }
           },
         }).then(
-          (payment) => {
-            console.log('Successful payment.')
-            console.log(payment)
-            window.alert('Successful payment')
+            (payment) => {
+              console.log('Successful payment.')
+              console.log(payment)
+              window.alert('Successful payment')
+              // payment is successful, payment will contain information about the transaction that was created
+            },
+            (error) => {
+              console.log('Failed to confirm payment.')
+              console.log(error)
+              // show the error to the customer
+              window.alert(error)
+            },
+          )
+
+        })
+        savePMButton.addEventListener('click', async () => {
+    
+        savePMButton.disabled = true
+        
+        await tilled.createPaymentMethod({
+        form,
+        type: 'card',
+        billing_details: {
+          name: document.getElementById('card-name-element').value,
+          address: {
+            country: document.getElementById('card-country-element').value,
+            zip: document.getElementById('card-zip-element').value,
+            state: document.getElementById('card-state-element').value,
+            city: document.getElementById('card-city-element').value,
+            street: document.getElementById('card-address-element').value
+          }
+        },
+      }).then(
+          (paymentMethod) => {
+            console.log(`Successful paymentMethod! The paymentMethod id is ${paymentMethod.id}`)
+            console.log(paymentMethod)
+            window.alert(`Successful paymentMethod! The paymentMethod id is ${paymentMethod.id}`)
             // payment is successful, payment will contain information about the transaction that was created
           },
           (error) => {
@@ -301,11 +403,11 @@
             window.alert(error)
           },
         )
-
       })
-  }) // end of DOMContentLoaded
-  document.addEventListener('DOMContentLoaded', async () => {
-    const tilledAccountId = account_id
+    }) // end of DOMContentLoaded
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const tilledAccountId = account_id
       const tilled = new Tilled(
         pk_PUBLISHABLE_KEY, 
         tilledAccountId,  
@@ -324,6 +426,7 @@
       await form.build()
       
       const submitButton = document.getElementById('submit2')
+      const savePMButton = document.getElementById('submitPM2')
     
       form.on('validation', (event) => {
         if (event.field) {
@@ -337,6 +440,7 @@
         }
 
         submitButton.disabled = form.invalid
+        savePMButton.disabled = form.invalid
       })
     
     
@@ -352,11 +456,11 @@
         let clientSecret = secretData.client_secret
 
         console.log('PaymentIntent clientSecret: ' + clientSecret)
-
-
+        
+        // Confirming PI
+        // you can either pass the entire payment method object
+        // or the id of the paymentMethod
         await tilled.confirmPayment(clientSecret, {
-          // you can either pass the entire form
-          // or the id of the paymentMethod
           payment_method: { 
             form,
             type: 'ach_debit',
@@ -374,7 +478,7 @@
             account_type: document.getElementById('ach_account_type').value
             }
           },
-        }).then(
+      }).then(
           (payment) => {
             console.log('Successful payment.')
             console.log(payment)
@@ -390,6 +494,44 @@
         )
 
       })
+      
+      // Creating Payment Method
+      savePMButton.addEventListener('click', async () => {
+    
+      savePMButton.disabled = true
+
+      await tilled.createPaymentMethod({
+        form,
+        type: 'ach_debit',
+        billing_details: {
+          name: document.getElementById('ach-name-element').value,
+          address: {
+            country: document.getElementById('ach-country-element').value,
+            zip: document.getElementById('ach-zip-element').value,
+            state: document.getElementById('ach-state-element').value,
+            city: document.getElementById('ach-city-element').value,
+            street: document.getElementById('ach-address-element').value
+          }
+        },
+        ach_debit: {
+        account_type: document.getElementById('ach_account_type').value
+        }
+      }).then(
+        (paymentMethod) => {
+          console.log(`Successful paymentMethod! The paymentMethod id is ${paymentMethod.id}`)
+          console.log(paymentMethod)
+          window.alert(`Successful paymentMethod! The paymentMethod id is ${paymentMethod.id}`)
+          // paymentMethod is successful, paymentMethod will contain information about the transaction that was created
+        },
+        (error) => {
+          console.log('Failed to confirm paymentMethod.')
+          console.log(error)
+          // show the error to the customer
+          window.alert(error)
+        },
+      )
+
+    })
   }) // end of DOMContentLoaded
 
 </script>
