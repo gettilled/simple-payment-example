@@ -36,6 +36,6 @@
 - View the paymentMethod.id in the alert or the console.
 
 # What's Next?
-[API Docs](api.tilled.com/docs)
+[API Docs](https://docs.tilled.com/api)
 
 You can try out attaching payment methods to customers, adding metadata, including platform fees on payment intents and much, much more via the Tilled API.
