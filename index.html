@@ -380,13 +380,13 @@
         form,
         type: 'card',
         billing_details: {
-          name: document.getElementById('card-name-element').value,
+          name: document.getElementById('card-name-element').value.trim(),
           address: {
-            country: document.getElementById('card-country-element').value,
-            zip: document.getElementById('card-zip-element').value,
-            state: document.getElementById('card-state-element').value,
-            city: document.getElementById('card-city-element').value,
-            street: document.getElementById('card-address-element').value
+            country: document.getElementById('card-country-element').value.trim(),
+            zip: document.getElementById('card-zip-element').value.trim(),
+            state: document.getElementById('card-state-element').value.trim(),
+            city: document.getElementById('card-city-element').value.trim(),
+            street: document.getElementById('card-address-element').value.trim()
           }
         },
       }).then(
@@ -475,7 +475,7 @@
               }
             },
             ach_debit: {
-            account_type: document.getElementById('ach_account_type').value
+            account_type: document.getElementById('ach_account_type').value.trim()
             }
           },
       }).then(
@@ -504,17 +504,17 @@
         form,
         type: 'ach_debit',
         billing_details: {
-          name: document.getElementById('ach-name-element').value,
+          name: document.getElementById('ach-name-element').value.trim(),
           address: {
-            country: document.getElementById('ach-country-element').value,
-            zip: document.getElementById('ach-zip-element').value,
-            state: document.getElementById('ach-state-element').value,
-            city: document.getElementById('ach-city-element').value,
-            street: document.getElementById('ach-address-element').value
+            country: document.getElementById('ach-country-element').value.trim(),
+            zip: document.getElementById('ach-zip-element').value.trim(),
+            state: document.getElementById('ach-state-element').value.trim(),
+            city: document.getElementById('ach-city-element').value.trim(),
+            street: document.getElementById('ach-address-element').value.trim()
           }
         },
         ach_debit: {
-        account_type: document.getElementById('ach_account_type').value
+        account_type: document.getElementById('ach_account_type').value.trim()
         }
       }).then(
         (paymentMethod) => {
