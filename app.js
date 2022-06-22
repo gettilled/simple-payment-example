@@ -5,7 +5,8 @@ const path = require('path')
 const open = require('open')
 const port = process.env.port || 5000
 
-const tilledSecretApiKey = 'Add Your Key Here'
+const tilledSecretApiKey = process.env.TILLED_SECRET_API_KEY
+const tilledApiUrl = process.env.TILLED_API_URL
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/index.html'))
@@ -20,7 +21,7 @@ app.get('/secret/:id', (req, res) => {
     'Tilled-Account': tilledAccountId,
   }
 
-  axios.post('https://sandbox-api.tilled.com/v1/payment-intents',
+  axios.post(`${tilledApiUrl}/v1/payment-intents`,
     {
       amount: 500,
       currency: 'usd',
@@ -54,6 +55,6 @@ app.get('/secret/:id', (req, res) => {
 })
 
 app.listen(port, () => {
-  //console.log(`Example app listening at http://localhost:${port}`)
-  //open(`http://localhost:${port}`)
+  console.log(`Example app listening at http://localhost:${port}`)
+  open(`http://localhost:${port}`)
 })
