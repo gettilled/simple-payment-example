@@ -16,7 +16,7 @@ then
     git clone -b fowler/cloudflarePages https://github.com/gettilled/simple-payment-example.git
 fi
 #change directory to simple payment
-cd /simple-payment-example
+cd /home/ec2-user/simple-payment-example
 git pull origin fowler/cloudflarePages
 #run npm install
 npm install
