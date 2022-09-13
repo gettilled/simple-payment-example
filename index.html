@@ -297,29 +297,29 @@
       })
     
       // Update UI to reflect card brand
-      form.fields.cardNumber.on('change', () => {
-        const cardBrand = form.getCardBrand()
+      form.fields.cardNumber.on('change', (evt) => {
+        const cardBrand = evt.brand;
         const icons = document.querySelectorAll('.credit-card-logo')
     
         const highlight = icon => icon.style = 'color: #3DC9B5';
 
         switch (cardBrand) {
-          case 'American Express':
+          case 'amex':
             highlight(document.querySelector('.credit-card-logo.fab.fa-cc-amex'));
             break
-          case 'MasterCard':
+          case 'mastercard':
             highlight(document.querySelector('.credit-card-logo.fab.fa-cc-mastercard'));
             break
-          case 'Visa':
+          case 'visa':
             highlight(document.querySelector('.credit-card-logo.fab.fa-cc-visa'));
             break
-          case 'Diners':
+          case 'diners':
             highlight(document.querySelector('.credit-card-logo.fab.fa-cc-diners-club'));
             break
-          case 'JCB':
+          case 'jcb':
             highlight(document.querySelector('.credit-card-logo.fab.fa-cc-jcb'));
             break
-          case 'Discover':
+          case 'discover':
             highlight(document.querySelector('.credit-card-logo.fab.fa-cc-discover'));
             break
           default:
