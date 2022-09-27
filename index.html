@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
   <link rel=icon href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/svgs/solid/credit-card.svg>
-  <script src="https://js.tilled.com/v1"></script>
+  <script src="https://js.tilled.com/v2"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
@@ -289,29 +289,29 @@
       })
     
       // Update UI to reflect card brand
-      form.fields.cardNumber.on('change', () => {
-        const cardBrand = form.getCardBrand()
+      form.fields.cardNumber.on('change', (evt) => {
+        const cardBrand = evt.brand;
         const icons = document.querySelectorAll('.credit-card-logo')
     
         const highlight = icon => icon.style = 'color: #3DC9B5';
 
         switch (cardBrand) {
-          case 'American Express':
+          case 'amex':
             highlight(document.querySelector('.credit-card-logo.fab.fa-cc-amex'));
             break
-          case 'MasterCard':
+          case 'mastercard':
             highlight(document.querySelector('.credit-card-logo.fab.fa-cc-mastercard'));
             break
-          case 'Visa':
+          case 'visa':
             highlight(document.querySelector('.credit-card-logo.fab.fa-cc-visa'));
             break
-          case 'Diners':
+          case 'diners':
             highlight(document.querySelector('.credit-card-logo.fab.fa-cc-diners-club'));
             break
-          case 'JCB':
+          case 'jcb':
             highlight(document.querySelector('.credit-card-logo.fab.fa-cc-jcb'));
             break
-          case 'Discover':
+          case 'discover':
             highlight(document.querySelector('.credit-card-logo.fab.fa-cc-discover'));
             break
           default:
@@ -508,7 +508,7 @@
           }
         },
         ach_debit: {
-        account_type: document.getElementById('ach_account_type').value.trim()
+        account_type: document.getElementById('ach_account_type').value
         }
       }).then(
         (paymentMethod) => {
