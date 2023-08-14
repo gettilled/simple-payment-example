@@ -1,0 +1,7 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "php-server": "php artisan serve",
+    }
+}

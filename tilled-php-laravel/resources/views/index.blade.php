@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
   <meta charset="utf-8">
@@ -8,17 +8,17 @@
   <script src="https://js.tilled.com/v2"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./assets/tailwind.config.js"></script>
+  <script src="{{ asset('assets/tailwind.config.js') }}"></script>
   <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/svgs/solid/credit-card.svg">
-  <link rel="stylesheet" href="./assets/style.css">
+  <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
 <body class="bg-tilledBg">
   <div id="main" class="flex justify-center items-center h-screen mx-5 mt-2">
     <div class="bg-white px-6 pb-0 rounded-lg shadow-md">
-      <img src="./assets/tilled-logo.png" alt="Tilled Logo"
-        class="mx-auto w-16 rounded-md border-4 border-white -mt-8 shadow-lg">
+      <img src="{{ asset('assets/tilled-logo.png') }}" alt="Tilled Logo"
+      class="mx-auto w-16 rounded-md border-4 border-white -mt-8 shadow-lg">
       <div class="card-body mt-3 mb-6">
         <ul
           class="nav flex flex-wrap bg-tilledToggle p-1 py-1 divide-x-2 mx-auto divide-tilledTabSelected text-tilledButtonText rounded-t shadow-sm border-b-2"
@@ -234,9 +234,9 @@
     </div>
     <!-- Included here for simplicity of example -->
     <script>
-      // Replace with your own account ID and publishable key
-      const accountId = "Add Your Account Id Here";
-      const publishableKey = "Add Your Publishable Key Here";
+      // Replace with your own account ID and publishable key, these should be defined in your .env file
+      const accountId = "{{ env('TILLED_ACCOUNT_ID') }}"; || "acct_...";
+      const publishableKey = "{{ env('TILLED_PUBLISHABLE_KEY') }}" || "pk_...";
 
       // DOM elements for card and ACH payment method save checkboxes
       const cardSaveCheckboxElement = document.getElementById("card-save-pm-checkbox-element");
