@@ -235,7 +235,7 @@
     <!-- Included here for simplicity of example -->
     <script>
       // Replace with your own account ID and publishable key, these should be defined in your .env file
-      const accountId = "{{ env('TILLED_ACCOUNT_ID') }}"; || "acct_...";
+      const accountId = "{{ env('TILLED_ACCOUNT_ID') }}" || "acct_...";
       const publishableKey = "{{ env('TILLED_PUBLISHABLE_KEY') }}" || "pk_...";
 
       // DOM elements for card and ACH payment method save checkboxes
