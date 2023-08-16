@@ -1,9 +1,7 @@
 {
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-    "node-server": "node app.js",
-		"php-server": "cd tilled-php-laravel && php artisan serve"
+		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
 	"author": "",
