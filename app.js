@@ -58,5 +58,4 @@ app.get('/secret/:id', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
-  open(`http://localhost:${port}`)
 })
