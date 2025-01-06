@@ -3,15 +3,18 @@ const axios = require('axios')
 const app = express()
 const path = require('path')
 const open = require('open')
-const port = process.env.port || 5000
+const port = process.env.port || 3000
+const env = require('dotenv').config()
+const secretKey = process.env.TILLED_SECRET_KEY;
 
-const tilledSecretApiKey = process.env.TILLED_SECRET_API_KEY
-const tilledApiUrl = process.env.TILLED_API_URL
+const tilledSecretApiKey = secretKey
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/index.html'))
 })
 
+// load local files and serve them as static assets
+app.use('/assets', express.static(path.join(__dirname, '/assets')));
 
 app.get('/secret/:id', (req, res) => {
   const tilledAccountId = req.params.id
@@ -20,8 +23,7 @@ app.get('/secret/:id', (req, res) => {
     Authorization: 'Bearer ' + tilledSecretApiKey,
     'Tilled-Account': tilledAccountId,
   }
-
-  axios.post(`${tilledApiUrl}/v1/payment-intents`,
+  axios.post('https://sandbox-api.tilled.com/v1/payment-intents',
     {
       amount: 500,
       currency: 'usd',
